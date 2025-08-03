@@ -8,6 +8,9 @@ const CurrencyConverter = () => {
   const [targetCurrency, setTargetCurrency] = useState('NGN');
   const [conversionRates, setConversionRates] = useState({});
 
+  const [amount, setAmount] = useState(1);
+  const [convertedAmount, setConvertedAmount] = useState('')
+
   const apiKey = "2409097c4750e42ff79ade63";
   const exchangeRateApiUrl = "https://v6.exchangerate-api.com/v6"
 
@@ -32,10 +35,22 @@ const CurrencyConverter = () => {
     }
   }, [targetCurrency, conversionRates])
 
+  useEffect(() => {
+    setConvertedAmount(amount * exchangeRate);
+  }, [amount, exchangeRate])
+
   return (
     <div>
       <h3>Currency Converter</h3>
-      <select name="exchangeRates"
+      <label htmlFor="">
+        Enter amount
+        <input type="text"
+          placeholder="e.g. 10"
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))} />
+      </label>
+
+      <p>from </p><select name="exchangeRates"
         id="exchangeRates"
         value={baseCurrency}
         onChange={(e) => setBaseCurrency(e.target.value)}>
@@ -46,8 +61,8 @@ const CurrencyConverter = () => {
         )
         )}
       </select>
-      
-      <select name="exchangeRates"
+
+      <p>to </p><select name="exchangeRates"
         id="exchangeRates"
         value={targetCurrency}
         onChange={(e) => setTargetCurrency(e.target.value)}>
@@ -59,7 +74,9 @@ const CurrencyConverter = () => {
         )}
       </select>
       {exchangeRate ?
-        (<p>{baseCurrency} 1 = {targetCurrency} {exchangeRate}</p>) :
+        (<p>{baseCurrency} 1 = {targetCurrency} {exchangeRate}</p>
+          && <p>{amount} {baseCurrency} = {convertedAmount.toFixed(2)} {targetCurrency} </p>
+        ) :
         (<p>Loading exchange rate...</p>)}
     </div>
 
