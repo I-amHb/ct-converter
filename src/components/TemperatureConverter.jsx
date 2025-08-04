@@ -5,5 +5,4 @@ const TemperatureConverter = () => {
     <div>TemperatureConverter</div>
   )
 }
-
 export default TemperatureConverter

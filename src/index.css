@@ -1,3 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --margin-small: 1rem;
+  --padding-small: 1.3rem;
+  --padding-mid: 2.3rem;
+  --padding-lar: 3.3rem;
+  
+
+}
+
 * {
   margin: 0;
   box-sizing: border-box;

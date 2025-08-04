@@ -1,11 +1,11 @@
-import CurrencyConverter from "./components/CurrencyConverter"
+import Header from "./components/Header"
 
 
 function App() {
 
   return (
     <>
-      < CurrencyConverter/>
+      <Header />
     </>
   )
 }
