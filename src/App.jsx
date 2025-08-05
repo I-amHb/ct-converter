@@ -1,3 +1,4 @@
+import ErrorBoundary from "./components/ErrorBoundary"
 import Header from "./components/Header"
 
 
@@ -5,7 +6,9 @@ function App() {
 
   return (
     <>
-      <Header />
+      <ErrorBoundary fallback="There was an error" >
+        <Header />
+      </ErrorBoundary>
     </>
   )
 }
