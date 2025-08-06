@@ -1,5 +1,6 @@
 import ErrorBoundary from "./components/ErrorBoundary"
 import Header from "./components/Header"
+import Home from "./pages/Home"
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       <ErrorBoundary fallback="There was an error" >
         <Header />
       </ErrorBoundary>
+      <Home/>
     </>
   )
 }

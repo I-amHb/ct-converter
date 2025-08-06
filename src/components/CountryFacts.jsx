@@ -29,9 +29,6 @@ const CountryFacts = ({ baseCurrency }) => {
             <div className='base-country'>
 
             </div>
-            <div className='target-country'>
-
-            </div>
         </div>
     )
 }

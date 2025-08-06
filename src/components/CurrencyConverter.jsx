@@ -17,16 +17,16 @@ const CurrencyConverter = () => {
 
   useEffect(() => {
 
-    fetch(`${exchangeRateApiUrl}/${apiKey}/latest/${baseCurrency}`)
-      .then(res => res.json())
-      .then(data => {
-        setConversionRates(data.conversion_rates);
-        setCurrencyList(Object.keys(data.conversion_rates));
-        setExchangeRate(data.conversion_rates[targetCurrency]);
-      })
-      .catch(error => {
-        console.error('Error fetching exchange rate', error)
-      });
+    // fetch(`${exchangeRateApiUrl}/${apiKey}/latest/${baseCurrency}`)
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     setConversionRates(data.conversion_rates);
+    //     setCurrencyList(Object.keys(data.conversion_rates));
+    //     setExchangeRate(data.conversion_rates[targetCurrency]);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error fetching exchange rate', error)
+    //   });
 
   }, [baseCurrency]);
 
@@ -42,9 +42,9 @@ const CurrencyConverter = () => {
 
   return (
     <>
-      <div className="currency-converter-container">
+      <div className="w-full bg-white py-mid  rounded-t-[0.6rem] border-primary border-t-[9px] mx-small ">
         <h3>Currency Converter</h3>
-        <label htmlFor="">
+        <label >
           Enter amount
           <input type="text"
             placeholder="e.g. 10"

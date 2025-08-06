@@ -1,28 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import "tailwindcss";
+
+
 
 * {
   margin: 0;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 }
 
+
 @theme {
-  --margin-small: 1rem;
-  --padding-small: 1.3rem;
+  --margin-small: 1.3rem;
+  --margin-mid: 2.3rem;
+  --margin-lar: 3.3rem;
+  --padding-small: 0.8rem;
+  --padding-smid: 1.3rem;
   --padding-mid: 2.3rem;
   --padding-lar: 3.3rem;
 
   /* Colors */
-  --color-primary: ;
-  --color-secondary: ;
-  --color-bground1: ;
+  --color-primary: #1F85DE;
+  --color-bground1: #f3f4f6;
+  --color-secondaryHvr: #043056;
   --color-bground2: ;
   --color-txt: ;
+  --color-txt2: ;
+  /* text size */
+  --text-sm: 1.5rem;
+  --text-md: 2rem;
+  --text-lg: 4rem;
+
+  /* Selector-Button */
+
+  --spacing-btnw:6.5rem;
+  --spacing-btnh:2rem;
+  --spacing-borderwidth:1px;
+  --shadow-btn: 'md';
+  --color-btnCol: #1F85DE;
 
   --spacing-header: 75px;
-
 
 }
 
 a {
   cursor: pointer;
+}
+
+@layer utilities{
+  .nav{
+    @apply lg:p-[5px] relative 
+  }
+
+  .nav::after {
+    @apply lg:content-[''] lg:bg-primary lg:h-[3px] lg:w-[0%]
+    lg:left-0 lg:bottom-[1px] absolute duration-300
+  }
+
+  .nav:hover::after {
+    @apply w-[100%]
+  }
 }

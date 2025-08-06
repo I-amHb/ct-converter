@@ -6,8 +6,8 @@ const Header = () => {
 const [toggleNavBar, setToggleNavBar] = useState(false);
 
     return (
-        <header className='w-full h-header flex justify-between items-center px-small md:px-mid lg:px-lar shadow-sm '>
-            <a href="#" className='text-xl font-bold'>CT-Con</a>
+        <header className='w-full h-header flex justify-between items-center px-small md:px-mid lg:px-lar '>
+            <a href="#" className='text-2xl font-extrabold'>CT-Con</a>
             <nav className='flex justify-center items-center '>
                 <ul className={ `transition-all duration-300 ease-in-out
                 flex flex-col fixed w-1/2 h-full top-header text-white bg-black text-center
@@ -16,13 +16,19 @@ const [toggleNavBar, setToggleNavBar] = useState(false);
                  `}
                 >
                     <li className="py-small lg:px-small">
-                        <a href="#" onClick={() => toggleNavBar && setToggleNavBar(false)}>Home</a>
+                        <a href="#" className="nav" 
+                        onClick={() => toggleNavBar && setToggleNavBar(false)}>
+                            Home</a>
                     </li>
                     <li className="py-small lg:px-small">
-                        <a href="#" onClick={() => toggleNavBar && setToggleNavBar(false)}>About</a>
+                        <a href="#" className="nav" 
+                        onClick={() => toggleNavBar && setToggleNavBar(false)}>
+                            About</a>
                     </li>
                     <li className="py-small lg:pl-small">
-                        <a href="#" onClick={() => toggleNavBar && setToggleNavBar(false)}>Contact</a>
+                        <a href="#" className="nav" 
+                        onClick={() => toggleNavBar && setToggleNavBar(false)}>
+                            Contact</a>
                     </li>
                 </ul>
                 <button className='lg:hidden' onClick={() => setToggleNavBar(prev => !prev)}>
