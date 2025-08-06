@@ -39,6 +39,11 @@
   --shadow-btn: 'md';
   --color-btnCol: #1F85DE;
 
+  /* Input/Select */
+
+  --height-input: 35px;
+  --radius-radius: .2rem;
+
   --spacing-header: 75px;
 
 }

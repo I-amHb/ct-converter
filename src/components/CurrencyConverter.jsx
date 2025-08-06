@@ -9,7 +9,7 @@ const CurrencyConverter = () => {
   const [targetCurrency, setTargetCurrency] = useState('NGN');
   const [conversionRates, setConversionRates] = useState({});
 
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState('0.00');
   const [convertedAmount, setConvertedAmount] = useState('')
 
   const apiKey = "2409097c4750e42ff79ade63";
@@ -42,48 +42,61 @@ const CurrencyConverter = () => {
 
   return (
     <>
-      <div className="w-full bg-white py-mid  rounded-t-[0.6rem] border-primary border-t-[9px] mx-small ">
-        <h3>Currency Converter</h3>
-        <label >
-          Enter amount
-          <input type="text"
-            placeholder="e.g. 10"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))} />
-        </label>
+      <div className="w-full bg-white py-mid  rounded-t-[0.6rem] border-primary border-t-[9px] mx-small shadow-md
+         ">
+        <div className="px-mid flex flex-col items-center gap-[30px]">
+          <label className="flex flex-col ">Amount
+            <input type="text"
+              placeholder="e.g. 10"
+              value={amount}
+              className="border w-[250px] h-input rounded-radius "
+              onChange={(e) => setAmount(Number(e.target.value))} />
+          </label>
+          <div className="flex flex-col ">
+            <p>from </p>
+            <select name="exchangeRates"
+              id="exchangeRates"
+              value={baseCurrency}
+              onChange={(e) => setBaseCurrency(e.target.value)}
+              className="border w-[250px] h-input rounded-radius "
+            >
+              <option value="" disabled selected hidden >Currency Code</option>
+              {currencyList.map(currencyCode => (
+                <option key={currencyCode} value={currencyCode}>
+                  {currencyCode}
+                </option>
+              )
+              )}
+            </select>
+          </div>
 
-        <p>from </p><select name="exchangeRates"
-          id="exchangeRates"
-          value={baseCurrency}
-          onChange={(e) => setBaseCurrency(e.target.value)}>
-          {currencyList.map(currencyCode => (
-            <option key={currencyCode} value={currencyCode}>
-              {currencyCode}
-            </option>
-          )
-          )}
-        </select>
+          <div className="flex flex-col" >
+            <p>to </p>
+            <select name="exchangeRates"
+              id="exchangeRates"
+              value={targetCurrency}
+              onChange={(e) => setTargetCurrency(e.target.value)}
+              className="border w-[250px] h-input rounded-radius "
+            >
+              <option value="" disabled selected hidden >Currency Code</option>
+              {currencyList.map(currencyCode => (
+                <option key={currencyCode} value={currencyCode}>
+                  {currencyCode}
+                </option>
+              )
+              )}
+            </select>
+          </div>
 
-        <p>to </p><select name="exchangeRates"
-          id="exchangeRates"
-          value={targetCurrency}
-          onChange={(e) => setTargetCurrency(e.target.value)}>
-          {currencyList.map(currencyCode => (
-            <option key={currencyCode} value={currencyCode}>
-              {currencyCode}
-            </option>
-          )
-          )}
-        </select>
-        {exchangeRate ?
-          (<p>{baseCurrency} 1 = {targetCurrency} {exchangeRate}</p>
-            && <p>{amount} {baseCurrency} = {convertedAmount.toFixed(2)} {targetCurrency} </p>
-          ) :
-          (<p>Loading exchange rate...</p>)}
+          {exchangeRate ?
+            (<p>{baseCurrency} 1 = {targetCurrency} {exchangeRate}</p>
+              && <p>Exchange Rate: {convertedAmount.toFixed(2)} {targetCurrency} </p>
+            ) :
+            (<p>Loading exchange rate...</p>)}
+        </div>
+        <CountryFacts baseCurrency={baseCurrency} />
       </div>
-      <CountryFacts
-        baseCurrency={baseCurrency}
-      />
+
     </>
 
 
