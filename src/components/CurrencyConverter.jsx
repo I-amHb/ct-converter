@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CountryFacts from "./CountryFacts";
+import ErrorBoundary from "./ErrorBoundary";
 
 const CurrencyConverter = () => {
 
@@ -49,7 +50,7 @@ const CurrencyConverter = () => {
             <input type="text"
               placeholder="e.g. 10"
               value={amount}
-              className="border w-[250px] h-input rounded-radius "
+              className="border w-[250px] h-input rounded-radius px-[5px] "
               onChange={(e) => setAmount(Number(e.target.value))} />
           </label>
           <div className="flex flex-col ">
@@ -94,7 +95,10 @@ const CurrencyConverter = () => {
             ) :
             (<p>Loading exchange rate...</p>)}
         </div>
-        <CountryFacts baseCurrency={baseCurrency} />
+        <ErrorBoundary fallback="There was an error">
+          <CountryFacts baseCurrency={baseCurrency} />
+        </ErrorBoundary>
+
       </div>
 
     </>

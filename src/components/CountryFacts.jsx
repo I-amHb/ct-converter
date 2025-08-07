@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 const CountryFacts = ({ baseCurrency }) => {
 
-    const [countryinfo, setCountryInfo] = useState(null);
+    const [countryInfo, setCountryInfo] = useState([]);
 
     const apiKey = 'Uz8GPAc2Jg9YYDhjmZCIRA==wgW5uNH7BxBwIVEv';
     const apiUrl = `https://restcountries.com/v3.1/currency/${baseCurrency}`
@@ -25,10 +25,15 @@ const CountryFacts = ({ baseCurrency }) => {
 
 
     return (
-        <div>
-            <div className='base-country'>
-
-            </div>
+        <div className='px-small'>
+            {countryInfo.map((countryData) => {
+                return (
+                    <p>
+                    {countryData.name.common}
+                </p>
+                )
+                
+            })}
         </div>
     )
 }
