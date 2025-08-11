@@ -4,38 +4,77 @@ import ErrorBoundary from "./ErrorBoundary";
 
 const CurrencyConverter = () => {
 
+  const [selectedBaseCountry, setSelectedBaseCountry] = useState('');
   const [exchangeRate, setExchangeRate] = useState(null);
   const [currencyList, setCurrencyList] = useState([]);
-  const [baseCurrency, setBaseCurrency] = useState('USD');
-  const [targetCurrency, setTargetCurrency] = useState('NGN');
-  const [conversionRates, setConversionRates] = useState({});
-
-  const [amount, setAmount] = useState('0.00');
-  const [convertedAmount, setConvertedAmount] = useState('')
+  const [baseCurrency, setBaseCurrency] = useState('');
+  const [selectedTargetCountry, setSelectedTargetCountry] = useState('');
+  const [targetCurrency, setTargetCurrency] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [convertedAmount, setConvertedAmount] = useState(0.00)
+  const [baseCountryDetails, setBaseCountryDetails] = useState()
+  const [targetCountryDetails, setTargetCountryDetails] = useState()
 
   const apiKey = "2409097c4750e42ff79ade63";
   const exchangeRateApiUrl = "https://v6.exchangerate-api.com/v6"
 
-  useEffect(() => {
-
-    // fetch(`${exchangeRateApiUrl}/${apiKey}/latest/${baseCurrency}`)
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     setConversionRates(data.conversion_rates);
-    //     setCurrencyList(Object.keys(data.conversion_rates));
-    //     setExchangeRate(data.conversion_rates[targetCurrency]);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error fetching exchange rate', error)
-    //   });
-
-  }, [baseCurrency]);
+  const restCountryApi = "https://restcountries.com/v3.1/all?fields=name,currencies,flags,maps,capital,population";
 
   useEffect(() => {
-    if (conversionRates && targetCurrency) {
-      setExchangeRate(conversionRates[targetCurrency]);
-    }
-  }, [targetCurrency, conversionRates])
+    fetch(restCountryApi)
+      .then(res => res.json())
+      .then(data => {
+        const countries = data.map((val) => {
+          const currencyCode = val.currencies ? Object.keys(val.currencies)[0] : null;
+          return {
+            name: val.name.common,
+            currencyCode: currencyCode
+          };
+        })
+
+        const soretedCountries = countries.sort((a, b) => a.name.localeCompare(b.name));
+
+        setCurrencyList(soretedCountries);
+      })
+      .catch(err => console.error(err));
+  }, [])
+
+  useEffect(() => {
+    if (!selectedBaseCountry) return;
+
+    fetch(`https://restcountries.com/v3.1/name/${selectedBaseCountry}?fields=name,currencies,flags,maps,capital,population`)
+      .then(res => res.json())
+      .then(data => {
+        setBaseCountryDetails(data[0]);
+        console.log(baseCountryDetails);
+        // const displayCountryDetails = () => {
+
+        //   return (
+        //     <div>
+
+        //     </div>
+        //   )
+
+        // }
+      })
+  }, [selectedBaseCountry])
+
+
+  useEffect(() => {
+    if (!baseCurrency || !targetCurrency) return;
+    fetch(`${exchangeRateApiUrl}/${apiKey}/latest/${baseCurrency}`)
+      .then(res => res.json())
+      .then(data => {
+        setExchangeRate(data.conversion_rates[targetCurrency]);
+
+      })
+      .catch(error => {
+        console.error('Error fetching exchange rate', error)
+      });
+
+  }, [baseCurrency, targetCurrency]);
+
+
 
   useEffect(() => {
     setConvertedAmount(amount * exchangeRate);
@@ -43,67 +82,93 @@ const CurrencyConverter = () => {
 
   return (
     <>
-      <div className="w-full bg-white py-mid  rounded-t-[0.6rem] border-primary border-t-[9px] mx-small shadow-md
-         ">
-        <div className="px-mid flex flex-col items-center gap-[30px]">
-          <label className="flex flex-col ">Amount
-            <input type="text"
-              placeholder="e.g. 10"
-              value={amount}
-              className="border w-[250px] h-input rounded-radius px-[5px] "
-              onChange={(e) => setAmount(Number(e.target.value))} />
-          </label>
-          <div className="flex flex-col ">
-            <p>from </p>
-            <select name="exchangeRates"
-              id="exchangeRates"
-              value={baseCurrency}
-              onChange={(e) => setBaseCurrency(e.target.value)}
-              className="border w-[250px] h-input rounded-radius "
-            >
-              <option value="" disabled selected hidden >Currency Code</option>
-              {currencyList.map(currencyCode => (
-                <option key={currencyCode} value={currencyCode}>
-                  {currencyCode}
-                </option>
-              )
-              )}
-            </select>
-          </div>
+      <div className="w-full flex  flex-col justify-center bg-white py-mid  rounded-t-[0.6rem] 
+      border-primary border-t-[9px] mx-small shadow-md lg:flex-row ">
+        <div className="px-mid flex flex-col items-center gap-[30px] max-w-full border">
+          <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px] ">
+            <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
+              <p>Amount</p>
+              <input
+                type="text"
+                placeholder="e.g. 10"
+                value={amount}
+                className="border h-input rounded-radius px-[5px] w-full"
+                onChange={(e) => setAmount(Number(e.target.value))}
+              />
+            </div>
+            <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
+              <p>from </p>
+              <select
+                name="exchangeRates"
+                id="exchangeRates"
+                value={selectedBaseCountry}
+                onChange={(e) => {
+                  setSelectedBaseCountry(e.target.value);
+                  const country = currencyList.find(c => c.name === e.target.value);
+                  setBaseCurrency(country?.currencyCode || '');
+                }}
+                className="border w-full h-input rounded-radius"
+              >
+                <option value="" disabled selected hidden>Currency Code</option>
+                {currencyList.map(country => (
+                  <option key={country.name} value={country.name}>
+                    {country.name} ({country.currencyCode})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
+              <p>to </p>
+              <select
+                name="exchangeRates"
+                id="exchangeRates"
+                value={selectedTargetCountry}
+                onChange={(e) => {
+                  setSelectedTargetCountry(e.target.value);
+                  const country = currencyList.find(c => c.name === e.target.value);
+                  setTargetCurrency(country?.currencyCode || '');
+                }}
+                className="border w-full h-input rounded-radius"
+              >
+                <option value="" disabled selected hidden>Currency Code</option>
+                {currencyList.map(country => (
+                  <option key={country.name} value={country.name}>
+                    {country.name} ({country.currencyCode})
+                  </option>
+                ))}
+              </select>
+            </div>
+            {exchangeRate ? (
+              <>
+                <p>{baseCurrency} 1 = {targetCurrency} {exchangeRate}</p>
+              </>
 
-          <div className="flex flex-col" >
-            <p>to </p>
-            <select name="exchangeRates"
-              id="exchangeRates"
-              value={targetCurrency}
-              onChange={(e) => setTargetCurrency(e.target.value)}
-              className="border w-[250px] h-input rounded-radius "
-            >
-              <option value="" disabled selected hidden >Currency Code</option>
-              {currencyList.map(currencyCode => (
-                <option key={currencyCode} value={currencyCode}>
-                  {currencyCode}
-                </option>
-              )
-              )}
-            </select>
-          </div>
-
-          {exchangeRate ?
-            (<p>{baseCurrency} 1 = {targetCurrency} {exchangeRate}</p>
-              && <p>Exchange Rate: {convertedAmount.toFixed(2)} {targetCurrency} </p>
             ) :
-            (<p>Loading exchange rate...</p>)}
+              (baseCurrency && targetCurrency && amount > 0 && <p>Loading exchange rate...</p>)}
+            <p>Converted Amount: {convertedAmount.toFixed(2)} {targetCurrency} </p>
+          </div>
+
         </div>
-        <ErrorBoundary fallback="There was an error">
-          <CountryFacts baseCurrency={baseCurrency} />
-        </ErrorBoundary>
+        <div className="px-mid flex flex-col items-center gap-[30px] max-w-full border">
+          <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px] h-full ">
+            {baseCountryDetails && (
+              <div>
+                <p>Name: {baseCountryDetails?.name?.common}</p>
+                <p>Capital: {baseCountryDetails?.capital}</p>
+                <a href={baseCountryDetails?.maps?.googleMaps}>Map Link</a>
+                <p>Pop: {baseCountryDetails?.population}</p>
+                <p>Currency: {Object.keys(baseCountryDetails.currencies)[0]}</p>
+              </div>
+            )}
+          </div>
+
+
+        </div>
 
       </div>
 
+
     </>
-
-
 
   )
 }
