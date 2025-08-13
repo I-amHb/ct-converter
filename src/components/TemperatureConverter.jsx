@@ -28,7 +28,7 @@ const TemperatureConverter = () => {
       border-primary border-t-[9px] mx-small shadow-md lg:flex-row '>
       <div className='px-mid flex flex-col items-center gap-[30px] max-w-full border'>
         <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px]" >
-          <h1 className=''>Temperature Converter</h1>
+          <h1 className='font-bold text-sm text-center text-primary'>Temperature Converter</h1>
           <div className='flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]'>
             <p>Amount</p>
             <input type="text"

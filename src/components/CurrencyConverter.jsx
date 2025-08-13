@@ -75,6 +75,7 @@ const CurrencyConverter = () => {
       border-primary border-t-[9px] mx-small shadow-md lg:flex-row ">
         <div className="px-mid flex flex-col items-center gap-[30px] max-w-full border">
           <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px] ">
+            <h1 className='font-bold text-sm text-center text-primary'>Currency Converter</h1>
             <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
               <p>Amount</p>
               <input
@@ -141,7 +142,7 @@ const CurrencyConverter = () => {
         <div className={`${!baseCountryDetails? 'hidden':'flex'} px-mid  flex-col items-center gap-[30px] max-w-full border`}>
           <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px] h-full ">
             {baseCountryDetails && (
-              <div>
+              <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
                 <div>
                   <p>Name: {baseCountryDetails?.name?.common}</p>
                   <p>Capital: {baseCountryDetails?.capital}</p>

@@ -9,8 +9,7 @@ const CTSelector = () => {
 
     return (
         <>
-            <div className='w-full py-mid'>
-                <p className='font-bold text-center text-primary'>Select Converter</p>
+            <div className='w-full pb-mid lg:px-mid'>
                 <div className='flex justify-center gap-4 p-mid
             lg:gap-8'>
                     <button className={`w-btnw h-btnh text-white hover:bg-secondaryHvr  bg-primary 

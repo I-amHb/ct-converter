@@ -10,7 +10,7 @@ const [toggleNavBar, setToggleNavBar] = useState(false);
             <a href="#" className='text-2xl font-extrabold'>CT-Converter</a>
             <nav className='flex justify-center items-center '>
                 <ul className={ `transition-all duration-300 ease-in-out
-                flex flex-col fixed w-1/2 h-full top-header text-white bg-black text-center
+                flex flex-col fixed w-1/2 h-full top-header text-white bg-secondaryHvr text-center
                     ${!toggleNavBar ? '-right-full ': 'right-0'}
                  lg:static lg:bg-inherit lg:text-black lg:flex lg:flex-row lg:w-full
                  `}
