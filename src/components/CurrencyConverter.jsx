@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import CountryFacts from "./CountryFacts";
-import ErrorBoundary from "./ErrorBoundary";
 
 const CurrencyConverter = () => {
 
@@ -47,15 +45,6 @@ const CurrencyConverter = () => {
       .then(data => {
         setBaseCountryDetails(data[0]);
         console.log(baseCountryDetails);
-        // const displayCountryDetails = () => {
-
-        //   return (
-        //     <div>
-
-        //     </div>
-        //   )
-
-        // }
       })
   }, [selectedBaseCountry])
 
@@ -82,7 +71,7 @@ const CurrencyConverter = () => {
 
   return (
     <>
-      <div className="w-full flex  flex-col justify-center bg-white py-mid  rounded-t-[0.6rem] 
+      <div className="w-full flex  flex-col justify-center bg-white py-mid  rounded-[0.6rem] 
       border-primary border-t-[9px] mx-small shadow-md lg:flex-row ">
         <div className="px-mid flex flex-col items-center gap-[30px] max-w-full border">
           <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px] ">
@@ -149,15 +138,26 @@ const CurrencyConverter = () => {
           </div>
 
         </div>
-        <div className="px-mid flex flex-col items-center gap-[30px] max-w-full border">
+        <div className={`${!baseCountryDetails? 'hidden':'flex'} px-mid  flex-col items-center gap-[30px] max-w-full border`}>
           <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px] h-full ">
             {baseCountryDetails && (
               <div>
-                <p>Name: {baseCountryDetails?.name?.common}</p>
-                <p>Capital: {baseCountryDetails?.capital}</p>
-                <a href={baseCountryDetails?.maps?.googleMaps}>Map Link</a>
-                <p>Pop: {baseCountryDetails?.population}</p>
-                <p>Currency: {Object.keys(baseCountryDetails.currencies)[0]}</p>
+                <div>
+                  <p>Name: {baseCountryDetails?.name?.common}</p>
+                  <p>Capital: {baseCountryDetails?.capital}</p>
+                </div>
+                <div>
+                  <img src={baseCountryDetails?.flags?.png} alt={`${baseCountryDetails.name.common} national flag`}
+                    className="w-[24px]" />
+                </div>
+                <div>
+                  <p>Pop: {baseCountryDetails?.population}</p>
+                </div>
+                <div>
+                  <a href={baseCountryDetails?.maps?.googleMaps}>Map Link</a>
+                </div>
+
+
               </div>
             )}
           </div>
