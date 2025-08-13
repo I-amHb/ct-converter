@@ -11,7 +11,7 @@ function App() {
         <ErrorBoundary fallback="There was an error">
           <Header />
         </ErrorBoundary>
-        <div className="flex-1">
+        <div className="flex-1 bg-bground1">
           <Home />
         </div>
         <Footer />

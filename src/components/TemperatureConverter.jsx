@@ -24,10 +24,10 @@ const TemperatureConverter = () => {
 
 
   return (
-    <div className='w-full flex  flex-col justify-center bg-white py-mid  rounded-[0.6rem] 
-      border-primary border-t-[9px] mx-small shadow-md lg:flex-row '>
-      <div className='px-mid flex flex-col items-center gap-[30px] max-w-full border'>
-        <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px]" >
+    <div className='w-full flex flex-col items-center justify-center bg-white py-mid rounded-[0.6rem] 
+      border-primary border-t-[9px] mx-small shadow-md lg:flex-row'>
+      <div className='px-mid flex flex-col gap-[30px] w-full min-w-[220px] max-w-[500px]'>
+        <div className="flex flex-col items-center gap-[30px] w-full min-w-[220px] max-w-[500px]" >
           <h1 className='font-bold text-sm text-center text-primary'>Temperature Converter</h1>
           <div className='flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]'>
             <p>Amount</p>
@@ -39,7 +39,7 @@ const TemperatureConverter = () => {
               }}
               className='border h-input rounded-radius px-[5px] w-full' />
           </div>
-          <div className='flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]'>
+          <div className='flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px] border-t pt-small'>
             <p>from</p>
             <select name="baseunit" id="baseunit"
               className='border w-full h-input rounded-radius'
@@ -49,7 +49,7 @@ const TemperatureConverter = () => {
               <option value="°F">Fahrenheit (°F)</option>
             </select>
           </div>
-          <div className='flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]'>
+          <div className='flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px] border-t pt-small'>
             <p>to</p>
             <select name="targetunit" id="targetunit"
               className='border w-full h-input rounded-radius'
@@ -59,14 +59,16 @@ const TemperatureConverter = () => {
               <option value="°F">Fahrenheit (°F)</option>
             </select>
           </div>
+
+          <div>
+            {amount && convertedAmount !== ''
+              ? `${amount} ${baseUnit} = ${convertedAmount.toFixed(2)} ${targetUnit}` :
+              ""}
+          </div>
         </div>
 
 
-        <div>
-          {amount && convertedAmount !== ''
-            ? `${amount} ${baseUnit} = ${convertedAmount.toFixed(2)} ${targetUnit}` :
-            "Enter a temperature and choose a unit"}
-        </div>
+
       </div>
     </div>
   )

@@ -54,7 +54,7 @@ a {
 
 @layer utilities{
   .nav{
-    @apply lg:p-[5px] relative 
+    @apply lg:p-[5px] relative text-[1rem]
   }
 
   .nav::after {

@@ -73,8 +73,8 @@ const CurrencyConverter = () => {
     <>
       <div className="w-full flex  flex-col justify-center bg-white py-mid  rounded-[0.6rem] 
       border-primary border-t-[9px] mx-small shadow-md lg:flex-row ">
-        <div className="px-mid flex flex-col items-center gap-[30px] max-w-full border">
-          <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px] ">
+        <div className="px-mid flex flex-col items-center gap-[30px] max-w-full">
+          <div className="flex flex-col items-center gap-[30px] w-full min-w-[220px] max-w-[500px] ">
             <h1 className='font-bold text-sm text-center text-primary'>Currency Converter</h1>
             <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
               <p>Amount</p>
@@ -86,7 +86,7 @@ const CurrencyConverter = () => {
                 onChange={(e) => setAmount(Number(e.target.value))}
               />
             </div>
-            <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
+            <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px] border-t pt-small">
               <p>from </p>
               <select
                 name="exchangeRates"
@@ -106,8 +106,38 @@ const CurrencyConverter = () => {
                   </option>
                 ))}
               </select>
+              <div className={`${!baseCountryDetails ? 'hidden' : 'flex'} px-mid  flex-col items-center gap-[30px] max-w-full`}>
+                <div className="flex flex-col items-center gap-[30px]  w-full min-w-[220px] max-w-[500px] h-full ">
+                  {baseCountryDetails && (
+                    <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px] py-small gap-2">
+                      <div className="flex flex-col gap-2.5 md:flex-row md:justify-between md:gap-2.5">
+                        <div className="w-[40px]">
+                          <img src={baseCountryDetails?.flags?.png} alt={`${baseCountryDetails.name.common} national flag`}
+                            className="w-full" />
+                        </div>
+                        <p className=""><span className="font-bold">Capital:</span> {baseCountryDetails?.capital}</p>
+                      </div>
+
+                      <div className="flex flex-col md:flex-row md:justify-between md:gap-2.5">
+                        <p><span className="font-bold">Currency:</span> {Object.keys(baseCountryDetails.currencies)[0]}</p>
+                        <p><span className="font-bold">Population:</span> {baseCountryDetails?.population}</p>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:justify-evenly md:gap-2.5">
+                        <button href={baseCountryDetails?.maps?.googleMaps}
+                          className={`w-btnw h-btnh text-white hover:bg-secondaryHvr  bg-primary 
+                border-transparent shadow-sm rounded-[0.6rem] transition-all duration-500 `}>Map Link</button>
+                      </div>
+
+
+
+                    </div>
+                  )}
+                </div>
+
+
+              </div>
             </div>
-            <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
+            <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px] border-t pt-small">
               <p>to </p>
               <select
                 name="exchangeRates"
@@ -139,32 +169,7 @@ const CurrencyConverter = () => {
           </div>
 
         </div>
-        <div className={`${!baseCountryDetails? 'hidden':'flex'} px-mid  flex-col items-center gap-[30px] max-w-full border`}>
-          <div className="flex flex-col items-center gap-[30px] border w-full min-w-[220px] max-w-[500px] h-full ">
-            {baseCountryDetails && (
-              <div className="flex flex-col w-full min-w-[220px] max-w-[400px] lg:max-w-[400px]">
-                <div>
-                  <p>Name: {baseCountryDetails?.name?.common}</p>
-                  <p>Capital: {baseCountryDetails?.capital}</p>
-                </div>
-                <div>
-                  <img src={baseCountryDetails?.flags?.png} alt={`${baseCountryDetails.name.common} national flag`}
-                    className="w-[24px]" />
-                </div>
-                <div>
-                  <p>Pop: {baseCountryDetails?.population}</p>
-                </div>
-                <div>
-                  <a href={baseCountryDetails?.maps?.googleMaps}>Map Link</a>
-                </div>
 
-
-              </div>
-            )}
-          </div>
-
-
-        </div>
 
       </div>
 

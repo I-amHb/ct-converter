@@ -1,7 +1,7 @@
 import React from 'react'
 const Footer = () => {
     return (
-        <footer className='w-full h-auto bg-black text-white flex flex-col justify-center items-center
+        <footer className='w-full h-auto bg-secondaryHvr text-white flex flex-col justify-center items-center
          p-3 md:px-mid space-y-5 mt-mid lg:px-lar' >
             <div className='md:w-full'>
                 <div><h1 className=' text-[20px] font-bold'>CT-Converter</h1></div>
